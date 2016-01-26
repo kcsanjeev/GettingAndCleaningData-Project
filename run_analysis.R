@@ -1,5 +1,7 @@
+library(plyr)
+
 # Step 0
-# Download files and unzip
+# Download files, unzip and load training and test files
 
 rootDir <- "./data"
 if(!file.exists(rootDir)){
@@ -14,8 +16,6 @@ subRootDir <- paste0(rootDir,"/UCI HAR Dataset")
 if(!file.exists(subRootDir)){
     unzip(zipfile = datasetFullPath,exdir= rootDir)
 }
-
-# Load training and test files
 
 xTraining <- read.table(paste0(subRootDir,"/train/X_train.txt"))
 
@@ -38,9 +38,8 @@ testData <- cbind(xTest,yTest,subjectTest)
 
 mergedData <- rbind(trainingData,testData)
 
-# Step 2 and Step 3
+# Step 2
 # Extract only the measurements on the mean and standard deviation for each measurement
-# Uses descriptive activity names to name the activities in the data set
 
 features <- read.table(paste0(subRootDir,"/features.txt"),colClasses = c("character"))
 
@@ -53,12 +52,15 @@ meanAndStdFilter <- grepl("mean|std|Activity|Subject", names(mergedData))
 
 meanAndStdFilteredData <- mergedData[, meanAndStdFilter]
 
-# Step 4
-#Appropriately labels the data set with descriptive variable names
+# Step 3
+# Uses descriptive activity names to name the activities in the data set
 
 activityLabels <- read.table(paste0(subRootDir,"/activity_labels.txt"))
 
 meanAndStdFilteredData$Activity <- activityLabels[meanAndStdFilteredData$Activity,2]
+
+# Step 4
+#Appropriately labels the data set with descriptive variable names
 
 names(meanAndStdFilteredData) <- gsub('^t',"TimeDomain-",names(meanAndStdFilteredData))
 
