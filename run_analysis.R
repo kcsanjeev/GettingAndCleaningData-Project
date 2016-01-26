@@ -82,5 +82,6 @@ names(meanAndStdFilteredData) <- gsub('BodyBody',"Body",names(meanAndStdFiltered
 
 # Step 5
 # From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
 averageByActivityAndSubject <- ddply(meanAndStdFilteredData, .(Activity,Subject), numcolwise(mean))
-write.csv(averageByActivityAndSubject, file = paste0(rootDir,"/tidyData.csv"))
+write.table(averageByActivityAndSubject, file = paste0(rootDir,"/tidyData.txt"),row.name=FALSE)
