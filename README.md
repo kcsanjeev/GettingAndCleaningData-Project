@@ -20,3 +20,5 @@ The script file run_analysis.R does the following in seqential order:
 <li> Appropriately labels the data set with descriptive variable names.
 <li> Finally  creates an independent tidy data set with the average of each variable for each activity and each subject. The final result is shown in tidyData.csv file</li>
 </ol>
+
+Note: Uses plyr library for average calculation
